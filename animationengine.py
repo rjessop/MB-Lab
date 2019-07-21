@@ -1,18 +1,25 @@
-# ManuelbastioniLAB - Copyright (C) 2015-2018 Manuel Bastioni
-# Official site: www.manuelbastioni.com
+# MB-Lab
+
 # MB-Lab fork website : https://github.com/animate1978/MB-Lab
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
 
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+# ##### BEGIN GPL LICENSE BLOCK #####
+#
+#  This program is free software; you can redistribute it and/or
+#  modify it under the terms of the GNU General Public License
+#  as published by the Free Software Foundation; either version 3
+#  of the License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software Foundation,
+#  Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+#
+# ##### END GPL LICENSE BLOCK #####
 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
 import os
@@ -136,9 +143,9 @@ class RetargetEngine:
                 d_path2 = f'pose.bones["{bone.name}"].rotation_axis_angle'
                 d_path3 = f'pose.bones["{bone.name}"].rotation_euler'
 
-                animation_curve1 = action.fcurves.find(d_path1, 0)
-                animation_curve2 = action.fcurves.find(d_path2, 0)
-                animation_curve3 = action.fcurves.find(d_path3, 0)
+                animation_curve1 = action.fcurves.find(d_path1, index=0)
+                animation_curve2 = action.fcurves.find(d_path2, index=0)
+                animation_curve3 = action.fcurves.find(d_path3, index=0)
 
                 if animation_curve1:
                     r_type = "QUATERNION"
@@ -169,7 +176,7 @@ class RetargetEngine:
                 if selected_bone:
                     d_path = self.get_bone_curve_id(selected_bone)
                     if d_path:
-                        animation_curve = action.fcurves.find(d_path, channel)
+                        animation_curve = action.fcurves.find(d_path, index=channel)
                         animation_data_id = f'{d_path}{str(channel)}'
                         if animation_curve:
                             return (armat.name, animation_curve, animation_data_id)
@@ -330,7 +337,7 @@ class RetargetEngine:
                 try:
                     return bones_chain[index]
                 except IndexError:
-                    logger.warning("The chain %s of mocap file has less bones than the chain in the lab", bones_chain)
+                    logger.warning("The chain %s of mocap file has less bones than the chain in MB-Lab", bones_chain)
 
         return None
 
@@ -1126,7 +1133,7 @@ class RetargetEngine:
     def rotate_skeleton(armat, rot_quat):
         armat.rotation_mode = 'QUATERNION'
         armat.rotation_quaternion = rot_quat
-        bpy.context.scene.update()
+        bpy.context.view_layer.update()
 
     def use_animation_pelvis(self, target_armat, source_armat):
 

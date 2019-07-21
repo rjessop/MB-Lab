@@ -17,16 +17,18 @@ Contents
    :maxdepth: 2
 
    about
+   updates
+   new_features
    installation
    getstart
    model_process
    creation_tools
    skin_editor
+   finalize
    after_creation_tools
    expressions
    proxy
    pose
-   finalize
    save_export
    license
    developer_main
